@@ -1,7 +1,7 @@
 # yjudge-runner
 
 This is a utility for internal use.
-It starts a new process as user in a ptrace jail
+It starts a new process as user in a seccomp jail
 with limits, measures time and memory usage and
 reports it back.
 
