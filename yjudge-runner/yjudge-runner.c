@@ -1,4 +1,5 @@
 #include "config.h"
+#include "runner.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -159,7 +160,6 @@ long get_time() {
 }
 
 static void master() {
-    drop_uid();
     umask(0077);
     close(pipe_up[1]);
     close(pipe_down[0]);
@@ -222,6 +222,7 @@ static void master() {
     memory_used = ru.ru_maxrss;
     real_time = get_time() - start;
 
+    drop_uid();
     FILE *f = stderr;
 
     if (log_path) {

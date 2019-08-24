@@ -14,6 +14,6 @@ yjudge-inject.so: yjudge-inject.c config.h
 	$(CC) $(CFLAGS) -shared -fPIC -Wl,-init,yjudge_inject yjudge-inject.c -o $@
 
 clean:
-	rm -f yjudge-runner
+	rm -f yjudge-runner yjudge-inject.so
 
 .PHONY: all clean install

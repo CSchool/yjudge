@@ -1,4 +1,5 @@
 #include "config.h"
+#include "runner.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
