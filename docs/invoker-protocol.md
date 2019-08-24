@@ -51,7 +51,8 @@
             "limits": {
                 "cpu": 1000,
                 "real": 5000,
-                "memory": 262144
+                "memory": 262144,
+                "fsize": 16777216
             },
             "cmdline": []
         }
@@ -79,6 +80,7 @@
             }
         }
     ],
+    "artifacts": ["output"],
     "id": "f25490ff-85ba-4e28-b175-7551f3e81f92"
 }
 ```
