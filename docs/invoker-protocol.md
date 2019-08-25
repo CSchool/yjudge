@@ -55,12 +55,12 @@
                         "memory": 262144,
                         "fsize": 16777216
                     },
-                    "cmdline": []
-                }
-            },
-            "resources": {
-                "input": {
-                    "hash": "d9f5be097c6452cf2f0f5a8f4921952fc6c93c05550f1c613aa8c458f321d4cb"
+                    "cmdline": [],
+                    "resources": {
+                        "input": {
+                            "hash": "d9f5be097c6452cf2f0f5a8f4921952fc6c93c05550f1c613aa8c458f321d4cb"
+                        }
+                    }
                 }
             },
             "pipes": [
@@ -102,7 +102,21 @@
                     "limits": {
                         "real": 10000,
                     },
-                    "cmdline": ["input.txt", "output.txt", "answer.txt"]
+                    "cmdline": ["input.txt", "output.txt", "answer.txt"],
+                    "resources": {
+                        "input": {
+                            "hash": "d9f5be097c6452cf2f0f5a8f4921952fc6c93c05550f1c613aa8c458f321d4cb",
+                            "filename": "input.txt"
+                        },
+                        "output": {
+                            "intermediate": "output",
+                            "filename": "output.txt"
+                        },
+                        "answer": {
+                            "hash": "2e4acd714d8446e919fbdd69a5784d80f26dbc00b584d478115b2294ce320b40",
+                            "filename": "answer.txt"
+                        }
+                    }
                 }
             },
             "pipes": [
@@ -116,20 +130,6 @@
                     }
                 }
             ],
-            "resources": {
-                "input": {
-                    "hash": "d9f5be097c6452cf2f0f5a8f4921952fc6c93c05550f1c613aa8c458f321d4cb",
-                    "filename": "input.txt"
-                },
-                "output": {
-                    "intermediate": true,
-                    "filename": "output.txt"
-                },
-                "answer": {
-                    "hash": "2e4acd714d8446e919fbdd69a5784d80f26dbc00b584d478115b2294ce320b40",
-                    "filename": "answer.txt"
-                }
-            },
             "stop": "always",
             "artifacts": {
                 "log": {
