@@ -194,6 +194,7 @@
 {
     "type": "file_response",
     "hash": "e05b5d8142c80082c30358c5f0760617c5cac46a102d09849d71007ffa371072",
+    "mime": "application/gzip",
     "content": "<RAW BINARY DATA HERE>"
 }
 ```
@@ -204,6 +205,7 @@
 {
     "type": "artifact_upload",
     "hash": "e05b5d8142c80082c30358c5f0760617c5cac46a102d09849d71007ffa371072",
+    "mime": "application/gzip",
     "content": "<RAW BINARY DATA HERE>"
 }
 ```
