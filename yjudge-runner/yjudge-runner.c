@@ -17,14 +17,13 @@
 #include <sys/resource.h>
 #include <sys/time.h>
 
-#define REG_SYSCALL (sizeof(long) * ORIG_RAX)
-#define REG_RESULT (sizeof(long) * RAX)
-
 extern char **environ;
 
 int cpu_limit = 0;
 int real_limit = 0;
 int mem_limit = 0;
+int fsize_limit = 0;
+int nofile_limit = 0;
 
 char *as_user = NULL;
 char *as_group = NULL;
@@ -93,14 +92,25 @@ static void slave() {
         }
     }
 
+    set_limit(RLIMIT_CORE, 0, 0);
+
     if (cpu_limit) {
         int sec = (cpu_limit + 999) / 1000;
         set_limit(RLIMIT_CPU, sec, sec + 1);  /* We want to catch SIGXCPU */
     }
 
     if (mem_limit) {
-        long bytes = (long)mem_limit * 1024;
+        long bytes = (long)mem_limit * 1024l;
         set_limit(RLIMIT_AS, bytes, bytes);
+    }
+
+    if (fsize_limit) {
+        long bytes = (long)fsize_limit * 1024l;
+        set_limit(RLIMIT_FSIZE, bytes, bytes);
+    }
+
+    if (nofile_limit) {
+        set_limit(RLIMIT_NOFILE, nofile_limit, nofile_limit);
     }
 
     int n_env = 0;
@@ -206,13 +216,13 @@ static void master() {
     if (WIFSIGNALED(status)) {
         if (WTERMSIG(status) == SIGXCPU) {
             flags |= CPU_TIME_LIMIT_EXCEEDED;
-        }
-
-        if (WTERMSIG(status) == SIGSYS) {
+        } else if (WTERMSIG(status) == SIGSYS) {
             flags |= SECURITY_VIOLATION;
+        } else if (WTERMSIG(status) == SIGXFSZ) {
+            flags |= FILE_SIZE_LIMIT_EXCEEDED;
         }
 
-        exit_code = -WTERMSIG(status);
+        exit_code = -(int)(WTERMSIG(status));
     } else if (WIFEXITED(status)) {
         exit_code = WEXITSTATUS(status);
     }
@@ -348,6 +358,10 @@ static void parse_cmdline(int argc, char **argv) {
             real_limit = atoi(value);
         } else if (!strcmp(key, "mem_limit")) {
             mem_limit = atoi(value);
+        } else if (!strcmp(key, "fsize_limit")) {
+            fsize_limit = atoi(value);
+        } else if (!strcmp(key, "nofile_limit")) {
+            nofile_limit = atoi(value);
         } else if (!strcmp(key, "user")) {
             as_user = value;
         } else if (!strcmp(key, "group")) {

@@ -16,6 +16,8 @@ Each parameter looks like `KEY=VALUE`.
  - `cpu_limit`: cpu time limit, in milliseconds, 0 = unlimited
  - `real_limit`: real time limit, in milliseconds, 0 = unlimited
  - `mem_limit`: memory limit, in KiB, 0 = unlimited
+ - `fsize_limit`: file size limit, in KiB, 0 = unlimited
+ - `nofile_limit`: one greater than max file descriptor, 0 = unlimited
  - `user`: user login to run as (requires root)
  - `group`: group name to run as (requires root)
  - `log_path`: path to write log to
@@ -33,4 +35,3 @@ Each parameter looks like `KEY=VALUE`.
  - Do not use it to run statically linked executables,
    as `LD_PRELOAD` is used to forbid syscalls.
  - Use `log_path`, so that the executing program can't interfere with `stderr`.
-
